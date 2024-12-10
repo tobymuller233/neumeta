@@ -77,8 +77,8 @@ def shp(cities_matrix):
 
     optimized_tour = fast_tsp.find_tour(distances.detach().cpu().numpy())
     # Remove the dummy node from the optimized tour
-    dummy_node_index = optimized_tour.index(0)
-    optimized_tour = optimized_tour[:dummy_node_index] + optimized_tour[dummy_node_index + 1:]
+    dummy_node_index = optimized_tour.index(0)      # find dummy node index
+    optimized_tour = optimized_tour[:dummy_node_index] + optimized_tour[dummy_node_index + 1:] # remove dummy node
     
     return np.array(optimized_tour) - 1
 
@@ -130,7 +130,7 @@ class PermutationManager:
             if not self._check_size(params):
                 continue
                 
-            full_city = torch.cat(params, dim=1)
+            full_city = torch.cat(params, dim=1)        # full_city[0] represens the number of channels, while full_city[1] represents the number of parameters
             order = shp(full_city)
             
             for key, mode in metadata:

@@ -301,7 +301,7 @@ def sample_weights(model, model_cls, coords_tensor, keys_list, indices_list, siz
     layer_id = coords_tensor[:, 0].int()
     input_dim = coords_tensor[:, -1]
     input_tensor = (coords_tensor/NORM) 
-    predicted_weights = model(input_tensor, layer_id=layer_id, input_dim=input_dim)
+    predicted_weights = model(input_tensor, layer_id=layer_id, input_dim=input_dim)     # the true forward pass
     
     selected_mask = sum([key_mask[k] for k in selected_keys]).bool()
     # Iterate over the keys that have been selected for processing.

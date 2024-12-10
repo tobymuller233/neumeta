@@ -267,7 +267,7 @@ def main():
             print(f"Epoch [{epoch+1}/{args.experiment.num_epochs}], Training Loss: {train_loss:.4f}, Learning Rate: {scheduler.get_last_lr()[0]:.6f}")
 
             # If it's time to evaluate the model
-            if (epoch + 1) % args.experiment.eval_interval == 0:
+            if (epoch + 1) % args.experiment.eval_interval == 0:    # 论文中说的K=50，加噪声的那种方法
                 # If EMA is specified, apply it
                 if ema:
                     ema.apply()

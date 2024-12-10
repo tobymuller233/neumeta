@@ -14,6 +14,8 @@ from neumeta.utils import (sample_coordinates, sample_weights, sample_subset,
                        print_omegaconf, shuffle_coordiates_all, set_seed, 
                        parse_args, get_hypernet, validate, get_dataset, validate_merge,
                        get_optimizer, validate_single, linear_decay, weighted_regression_loss)
+
+# from neumeta.baseline.mnist import validate
 import copy
 from smooth.permute import PermutationManager, compute_tv_loss_for_network
 
@@ -305,6 +307,7 @@ def main_nerf():
             if (epoch + 1) % args.experiment.eval_interval == 0:
                 if ema:
                     ema.apply()
+                # validate the model
                     val_loss, acc = validate(
                         hyper_model, val_loader, val_criterion, model_cls=model, args=args)
                     ema.restore()  # Restore the original weights

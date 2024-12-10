@@ -9,7 +9,7 @@ from tqdm import tqdm
 from neumeta.models.lenet import MnistNet, MnistResNet
 from smooth.permute import PermutationManager, compute_tv_loss_for_network
 
-from neumeta.toy_cls import compute_tv_loss_for_network
+# from neumeta.toy_cls import compute_tv_loss_for_network
 
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -111,7 +111,7 @@ def main_resnet():
     print("Training finished.")
 
 def permute():
-    hidden_dim= 16
+    hidden_dim= 32
     num_blocks = [3,3]
     batch_size = 128
     
@@ -120,7 +120,9 @@ def permute():
     val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
     criterion = torch.nn.CrossEntropyLoss()
     
-    model = MnistResNet(num_blocks=num_blocks, hidden_dim=hidden_dim).to(device)
+    # model = MnistResNet(num_blocks=num_blocks, hidden_dim=hidden_dim).to(device)
+    model = MnistNet(hidden_dim=hidden_dim).to(device)
+    criterion = torch.nn.CrossEntropyLoss()
     model.load_state_dict(torch.load(f"toy/mnist_{model.__class__.__name__}_dim{hidden_dim}.pth"))
     model.eval()
     print("TV original model: ", compute_tv_loss_for_network(model, lambda_tv=1.0).item())
@@ -155,6 +157,6 @@ def test():
     
 
 if __name__ == "__main__":
-    # main()
+    main()
     # main_resnet()
-    permute()
+    # permute()
